@@ -1,0 +1,18 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-vintage;
+    @apply select-none;
+  }
+  .app {
+    @apply absolute top-32 left-auto;
+  }
+  
+}
