@@ -1,93 +1,184 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
+import AudioSrc from "./AudioSrc";
+
+import Note from "./Component/Notes";
 function Piano() {
-    const [monitor,setMonitor] = useState('');
-    useEffect(()=>{
-      const arr = ['Q','W','E','A','S','D','Z','X','C']
-      const handleKeypress = (e)=>{
-        if (arr.includes(e.key.toUpperCase())){
-        document.querySelector(`#${e.key.toUpperCase()}`).play()
-        setMonitor(document.querySelector(`#${e.key.toUpperCase()}`)['src'].split('/')[5])
-        }
-        
-      }
-      window.addEventListener('keydown',handleKeypress)
-      return ()=>{
-        window.removeEventListener('keydown',handleKeypress)
-      }
-    },[])
-  
-    function handleAudio (e) {
-      e.target.children[0].play()
-      setMonitor(e.target.children[0].src.split('/')[5])
+  const pianoRef = useRef()
+  const [keyboardTheme, setKeyBoardTheme] = useState(false);
+  useEffect(()=>{
+    pianoRef.current.focus()
+  },[])
+  const handleKeyDown = (e)=>{
+    if (notes.find((note) => note.keyboardKey === e.key)) {
+      document.querySelector(`#${e.key}`).play();
+   
     }
-    return (
-      <div id="drum-machine">
-        <div id="display">{monitor}</div>
-        <button class="drum-pad" id='1' onClick={handleAudio}>
-          <audio class='clip'
-            id="Q"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
-          ></audio>
-          Q
-        </button>
-        <button class="drum-pad" id='2' onClick={handleAudio}>
-          <audio class='clip'
-            id="W"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"
-          ></audio>
-          W
-        </button>
-        <button class="drum-pad" id='3' onClick={handleAudio}>
-          <audio class='clip'
-            id="E"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"
-          ></audio>
-          E
-        </button>
-        <button class="drum-pad" id='4' onClick={handleAudio}>
-          <audio class='clip'
-            id="A"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"
-          ></audio>
-          A
-        </button>
-        <button class="drum-pad"id='5' onClick={handleAudio}>
-          <audio class='clip'
-            id="S"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"
-          ></audio>
-          S
-        </button>
-        <button class="drum-pad" id='6' onClick={handleAudio}>
-          <audio class='clip'
-            id="D"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"
-          ></audio>
-          D
-        </button>
-        <button class="drum-pad" id='7' onClick={handleAudio}>
-          <audio class='clip'
-            id="Z"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
-          ></audio>
-          Z
-        </button>
-        <button class="drum-pad" id='8' onClick={handleAudio}>
-          <audio class='clip'
-            id="X"
-            src="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"
-          ></audio>
-          X
-        </button>
-        <button class="drum-pad" id='9' onClick={handleAudio}> 
-          <audio class='clip'
-            id="C"
-            src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
-          ></audio>
-          C
-        </button>
+  }
+  const handleKeyUp = (e)=>{
+    if (notes.find((note) => note.keyboardKey === e.key)) {
+      document.querySelector(`#${e.key}`).load();
+    
+    }
+  }
+  const handleFocus = (e) => {
+    window.removeEventListener('keydown',handleKeyDown)
+    window.removeEventListener('keyup',handleKeyUp)
+    window.addEventListener('keydown',handleKeyDown)
+    window.addEventListener('keyup',handleKeyUp)
+  
+  };
+  const handleBlur= (e) => {
+    window.removeEventListener('keydown',handleKeyDown)
+    window.removeEventListener('keyup',handleKeyUp)
+  
+  };
+
+  const notes = [
+    {
+      keyNote: "F2",
+      audioSrc: AudioSrc.key01,
+      keyboardKey: "z",
+    },
+    {
+      keyNote: "F#2",
+      audioSrc: AudioSrc.key02,
+      keyboardKey: "s",
+    },
+    {
+      keyNote: "G2",
+      audioSrc: AudioSrc.key03,
+      keyboardKey: "x",
+    },
+    {
+      keyNote: "G#2",
+      audioSrc: AudioSrc.key04,
+      keyboardKey: "d",
+    },
+    {
+      keyNote: "A2",
+      audioSrc: AudioSrc.key05,
+      keyboardKey: "c",
+    },
+    {
+      keyNote: "A#2",
+      audioSrc: AudioSrc.key06,
+      keyboardKey: "f",
+    },
+    {
+      keyNote: "B2",
+      audioSrc: AudioSrc.key07,
+      keyboardKey: "v",
+    },
+    {
+      keyNote: "C3",
+      audioSrc: AudioSrc.key08,
+      keyboardKey: "q",
+    },
+    {
+      keyNote: "C#3",
+      audioSrc: AudioSrc.key09,
+      keyboardKey: "2",
+    },
+    {
+      keyNote: "D3",
+      audioSrc: AudioSrc.key10,
+      keyboardKey: "w",
+    },
+    {
+      keyNote: "D#3",
+      audioSrc: AudioSrc.key11,
+      keyboardKey: "3",
+    },
+    {
+      keyNote: "E3",
+      audioSrc: AudioSrc.key12,
+      keyboardKey: "e",
+    },
+    {
+      keyNote: "F3",
+      audioSrc: AudioSrc.key13,
+      keyboardKey: "r",
+    },
+    {
+      keyNote: "F#3",
+      audioSrc: AudioSrc.key14,
+      keyboardKey: "5",
+    },
+    {
+      keyNote: "G3",
+      audioSrc: AudioSrc.key15,
+      keyboardKey: "t",
+    },
+    {
+      keyNote: "G#3",
+      audioSrc: AudioSrc.key16,
+      keyboardKey: "6",
+    },
+    {
+      keyNote: "A3",
+      audioSrc: AudioSrc.key17,
+      keyboardKey: "y",
+    },
+    {
+      keyNote: "A#3",
+      audioSrc: AudioSrc.key18,
+      keyboardKey: "7",
+    },
+    {
+      keyNote: "B3",
+      audioSrc: AudioSrc.key19,
+      keyboardKey: "u",
+    },
+    {
+      keyNote: "C4",
+      audioSrc: AudioSrc.key20,
+      keyboardKey: "i",
+    },
+    {
+      keyNote: "C#4",
+      audioSrc: AudioSrc.key21,
+      keyboardKey: "9",
+    },
+    {
+      keyNote: "D4",
+      audioSrc: AudioSrc.key22,
+      keyboardKey: "o",
+    },
+    {
+      keyNote: "D#4",
+      audioSrc: AudioSrc.key23,
+      keyboardKey: "0",
+    },
+    {
+      keyNote: "E4",
+      audioSrc: AudioSrc.key24,
+      keyboardKey: "p",
+    },
+  ];
+
+  return (
+    <div className="piano w-fit h-fit" tabIndex={-1} onFocus={handleFocus} onBlur={handleBlur} ref={pianoRef} onClick={()=>pianoRef.current.focus()}>
+      <div className=" h-12 bg-black flex justify-between items-center">
+        <div>
+          <button
+            onClick={() => setKeyBoardTheme((prev) => !prev)}
+            className="border border-black rounded bg-vintagePaper-0 hover:bg-white ml-4 p-1"
+          >
+            Show notes
+          </button>
+        </div>
+        <div className=""></div>
+        <div className=""></div>
       </div>
-    );
+      <div className="relative w-fit h-96 ">
+        {notes.map((note) => (
+          <Note key={note.keyNote} setting={note}>
+            {keyboardTheme ? note.keyNote : note.keyboardKey}
+          </Note>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Piano;

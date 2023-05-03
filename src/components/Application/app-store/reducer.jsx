@@ -7,11 +7,11 @@ import {
   SET_DRAGGING_POSITION,
   SET_DRAGGING_INITIAL_POSITION,
 } from "./constant";
-import PersonalInfo from "../PersonalInfo";
+import Piano from '@app/Piano'
 
 const initState = {
-  nameApp: 'PersonalInfo0',
-  appRunning: [<PersonalInfo/>],
+  nameApp: 'Piano',
+  appRunning: [<Piano/>],
    //Drag feature
    isDraggable: false,
    dragPosition: { x: 0, y: 0 },

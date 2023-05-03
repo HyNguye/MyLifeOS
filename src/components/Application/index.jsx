@@ -5,6 +5,7 @@ function Application({ children ,index}) {
   const [state, dispatch] = useContext(AppContext);
   useEffect(()=>{
     dispatch(actions.setCurrentApp(children.type.name+index));
+    
   },[])
   const handlePriority = () => {
     dispatch(actions.setCurrentApp(children.type.name+index));
