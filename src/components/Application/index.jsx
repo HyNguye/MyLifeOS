@@ -13,10 +13,10 @@ function Application({ children ,index}) {
   };
   return (
     <div
-      className=" border-black border-4 w-fit max-w-screen-lg min-w-fit max-h-fitScreen overflow-scroll 
+      className=" border-black border-4 w-fit max-w-screen min-w-fit max-h-fitScreen overflow-scroll 
       flex flex-col"
     >
-      <div className=" h-7 max-w-app min-w-utility bg-black text-white flex gap-0 sticky top-0">
+      <div className=" h-7 max-w-screen min-w-utility bg-black text-white flex gap-0 sticky top-0">
         <div
           className="text-sm text-white text-left bg-black  w-full p-1"
           onClick={handlePriority}

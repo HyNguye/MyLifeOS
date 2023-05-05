@@ -12,7 +12,9 @@ export default {
       },
       backgroundColor: {
         vintagePaper: ['#F6EEE0'],
-        old: ['#CDCDCD']
+        old: ['#CDCDCD'],
+        brownLayout: ['#835d3d'],
+        shopDesLayout: ['#7f4a49']
       },
       width:{
         utility: ['400px'],

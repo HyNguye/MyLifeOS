@@ -9,15 +9,20 @@ function Piano() {
     pianoRef.current.focus()
   },[])
   const handleKeyDown = (e)=>{
+     let myEvent =/^[0-9]+$/.test(e.key)?'note' +e.key: e.key
+    
     if (notes.find((note) => note.keyboardKey === e.key)) {
-      document.querySelector(`#${e.key}`).play();
-   
+      document.querySelector(`#${myEvent}`).play();
+      document.querySelector(`.${myEvent}`).style.backgroundColor = 'grey'
     }
   }
   const handleKeyUp = (e)=>{
-    if (notes.find((note) => note.keyboardKey === e.key)) {
-      document.querySelector(`#${e.key}`).load();
+    let myEvent =/^[0-9]+$/.test(e.key)?'note' +e.key: e.key
     
+    if (notes.find((note) => note.keyboardKey === e.key)) {
+      document.querySelector(`#${myEvent}`).load();
+      document.querySelector(`.${myEvent}`).style.backgroundColor= 
+      (notes.find(note=>(note.keyNote.includes('#')&&note.keyboardKey===e.key))?'black':'white')
     }
   }
   const handleFocus = (e) => {

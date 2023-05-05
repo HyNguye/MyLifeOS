@@ -55,7 +55,7 @@ function PersonalInfo() {
         <img
           src={avatar}
           alt=""
-          className=" w-1/3 h-fit object-contain border-8 border-white "
+          className=" w-1/3 h-fit object-contain border-8 border-white blur-sm hover:filter-none"
         />
       </div>
       <div className="w-full px-14 py-8 flex justify-evenly">

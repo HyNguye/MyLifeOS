@@ -1,3 +1,5 @@
+import MyShop from "../components/Application/MyShop";
+import Piano from "../components/Application/Piano";
 import {
   CHANGE_BACKGROUND,
   FIND_APP,
@@ -11,7 +13,7 @@ const initState = {
   lockScreen: false,
   find: "",
   findList: [],
-  appList: [],
+  appList: [<MyShop/>,<Piano/>],
   
  
 };

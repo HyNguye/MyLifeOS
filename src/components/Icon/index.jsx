@@ -14,7 +14,7 @@ function AppIcon({children}) {
           case 'NewText':
             
             return '.txt'
-        
+          
           default:
             return '.exe'
         }
@@ -37,7 +37,10 @@ function AppIcon({children}) {
             case 'NewText':
                 
                 return  icon.TextIcon
-            
+            case 'Piano':
+                return icon.PianoIcon
+            case 'MyShop':
+              return icon.ShopIcon
             default:
                 return icon.NewFolderIcon
         }
