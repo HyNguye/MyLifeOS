@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import Application from "../../components/Application";
 import Disk from "@asset/floppyDisk.png";
+import { useNavigate } from "react-router-dom";
 function LoginPage() {
+  const navigate = useNavigate();
   const [users, setUser] = useState([]);
   const [checkedUser, setCheckedUser] = useState("");
-  const [password,setPass] = useState('');
-  const [showPass,setShowPass] = useState(false)
+  const [password, setPass] = useState("");
+  const [showPass, setShowPass] = useState(false);
   useEffect(() => {
     fetch("https://fakestoreapi.com/users?limit=4")
       .then((res) => res.json())
       .then((usersFet) => setUser(usersFet));
   }, []);
- const handlePassword = (e) => {
-  setPass(e.target.value)
- }
- const handleHint = ()=>{
-   setShowPass(true)
-   setPass(users.find(user=>user.username===checkedUser).password)
- }
- const handleLogin = () => {
-  
- }
+  const handlePassword = (e) => {
+    setPass(e.target.value);
+  };
+  const handleHint = () => {
+    setShowPass(true);
+    setPass(users.find((user) => user.username === checkedUser).password);
+  };
+  const handleLogin = () => {
+    if(users.find(user=>user.username===checkedUser&&user.password===password))
+    { 
+      localStorage.setItem('user', checkedUser);
+      navigate('/Home',{replace: true})
+    }
+  };
   return (
     <div className="w-screen h-screen bg-cyan-600 flex justify-center items-center">
       <Application index="Login Page">
@@ -35,11 +41,13 @@ function LoginPage() {
             <div className=" text-sm">Select user name:</div>
             <ul className="bg-white shadow-inner shadow-black w-full h-fit p-2">
               {users.map((user) => (
-                <li>
+                <li key={user.id}>
                   {" "}
                   <button
                     onClick={() => setCheckedUser(user.username)}
-                    className={`w-full text-left ${user.username===checkedUser&&'bg-blue-700 text-white'}`}
+                    className={`w-full text-left ${
+                      user.username === checkedUser && "bg-blue-700 text-white"
+                    }`}
                   >
                     {user.username}
                   </button>
@@ -48,21 +56,35 @@ function LoginPage() {
             </ul>
             <div className="text-sm">Password:</div>
             <input
-              type={showPass ? 'text' : 'password'}
+              type={showPass ? "text" : "password"}
               className="w-full p-2 rounded-none shadow-inner shadow-black"
               value={password}
               onChange={handlePassword}
             />
             <div>
-              <input type="checkbox" name="" id="show-pass" checked={showPass} onChange={()=>setShowPass(prev=>!prev)} />
-              <label htmlFor="show-pass" className="ml-3 text-xs underline-offset-1 underline hover:text-blue-700">Show password</label>
+              <input
+                type="checkbox"
+                name=""
+                id="show-pass"
+                checked={showPass}
+                onChange={() => setShowPass((prev) => !prev)}
+              />
+              <label
+                htmlFor="show-pass"
+                className="ml-3 text-xs underline-offset-1 underline hover:text-blue-700"
+              >
+                Show password
+              </label>
             </div>
             <div className="self-end">
-              <button className="border border-gray-600 shadow shadow-black rounded-none p-2">
+              <button className="border border-gray-600 shadow shadow-black rounded-none p-2"
+              onClick={handleLogin}>
                 Login
               </button>
-              <button className="border border-gray-400 shadow shadow-black rounded-none p-2 ml-4"
-              onClick={handleHint}>
+              <button
+                className="border border-gray-400 shadow shadow-black rounded-none p-2 ml-4"
+                onClick={handleHint}
+              >
                 Get Hint
               </button>
             </div>

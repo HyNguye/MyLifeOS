@@ -15,13 +15,13 @@ function Home() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(HomeContext);
   const [stateApp, dispatchApp] = useContext(AppContext);
-
+  //check login token (use unique username like token)
   useEffect(() => {
-    if (state.lockScreen) {
-      navigate("/Lockscreen", { replace: true });
+    if (!(localStorage.getItem("user"))) {
+      navigate("/Login", { replace: true });
     }
-  });
-
+  }, []);
+  //remove appRuning queue
   useEffect(() => {
     if (
       stateApp.appRunning.every((app) => app === "") &&
@@ -30,6 +30,12 @@ function Home() {
       dispatchApp(appActions.cleanTemp());
     }
   }, [stateApp.appRunning]);
+  //Savescreen feature
+  useEffect(() => {
+    if (state.lockScreen) {
+      navigate("/Lockscreen", { replace: true });
+    }
+  });
   useEffect(() => {
     let timer = setTimeout(() => {
       dispatch(actions.lockScreen(true));
@@ -51,6 +57,8 @@ function Home() {
       window.removeEventListener("click", handleAutoLockScreen);
     };
   }, []);
+
+  //Draggable global on HomePage fix cursor not enough speed bug
   function handleMouseMove(event) {
     if (stateApp.isDraggable) {
       dispatchApp(
@@ -61,11 +69,15 @@ function Home() {
       );
     }
   }
-  function autoRename(app){
-    let newArr = stateApp.appRunning.filter(myApp=>myApp.type === app.type)
-  
-    if(newArr.lastIndexOf(app)===0||newArr.lastIndexOf(app)===-1){return ''}
-    return newArr.lastIndexOf(app)
+
+  // Unique name for unique ref  => handle many apprunning in one type
+  function autoRename(app) {
+    let newArr = stateApp.appRunning.filter((myApp) => myApp.type === app.type);
+
+    if (newArr.lastIndexOf(app) === 0 || newArr.lastIndexOf(app) === -1) {
+      return "";
+    }
+    return newArr.lastIndexOf(app);
   }
   return (
     <div

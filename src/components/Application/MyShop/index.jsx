@@ -8,9 +8,12 @@ function MyShop() {
   const [productList, setProductList] = useState([]);
   const [isActive, setActiveCategory] = useState("jewelery");
   const [productOnShow, setProductOnShow] = useState("");
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem(localStorage.getItem("user"))) || []
+  );
   const [quantity, setQuatity] = useState(0);
-  const [showCart,setShowCart] = useState(false)
+  const [showCart, setShowCart] = useState(false);
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/products/categories")
       .then((res) => res.json())
@@ -21,6 +24,9 @@ function MyShop() {
       .then((res) => res.json())
       .then((product) => setProductList(product));
   }, [isActive]);
+  useEffect(() => {
+    localStorage.setItem(localStorage.getItem("user"), JSON.stringify(cart));
+  }, [cart]);
 
   const handleClick = useCallback((cate) => setActiveCategory(cate), []);
   const handleShowPd = useCallback((payload) => setProductOnShow(payload), []);
@@ -30,7 +36,7 @@ function MyShop() {
     }
   };
   const handleAddCart = () => {
-    if (quantity&&productOnShow) {
+    if (quantity && productOnShow) {
       setCart((prev) => [
         ...prev,
         {
@@ -39,28 +45,29 @@ function MyShop() {
           price: productOnShow.price * quantity,
         },
       ]);
-      setQuatity(0)
+      setQuatity(0);
     }
   };
-  const handleRemoveCart=useCallback((payload)=>setCart(payload),[])
+  const handleRemoveCart = useCallback((payload) => setCart(payload), []);
+
   return (
     <div className=" max-h-fitScreen max-w-screen-lg w-screen h-screen bg-brownLayout-0 overflow-x-scroll ">
       <div className="nav bg-black bg-opacity-70 p-2 flex">
         <div>
-        {categories.map((category) => (
-          <CategoriesBtn
-            handleClick={handleClick}
-            key={category}
-            isActive={isActive === category ? true : false}
-          >
-            {category}
-          </CategoriesBtn>
-        ))}
+          {categories.map((category) => (
+            <CategoriesBtn
+              handleClick={handleClick}
+              key={category}
+              isActive={isActive === category ? true : false}
+            >
+              {category}
+            </CategoriesBtn>
+          ))}
         </div>
         <button
           className=" text-white flex-grow flex justify-center items-center relative "
-          onClick={()=>setShowCart(true)}
-          onBlur={()=>setShowCart(false)}
+          onClick={() => setShowCart(true)}
+          onBlur={() => setShowCart(false)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +93,11 @@ function MyShop() {
               {cart.length >= 10 ? "x" : cart.length}
             </span>
           </span>
-          <Payment cart={cart} handleRemoveCart={handleRemoveCart} show={showCart} />
+          <Payment
+            cart={cart}
+            handleRemoveCart={handleRemoveCart}
+            show={showCart}
+          />
         </button>
       </div>
       <div className="body w-full flex">

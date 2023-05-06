@@ -21,7 +21,7 @@ function StartupPage() {
      const navigate = useNavigate()
      useEffect(()=>{
          const loadingDone = setTimeout(()=>{
-           navigate('/Home',{replace: true})
+           navigate('/Login',{replace: true})
          },8000)
          return () =>{
            clearTimeout(loadingDone)

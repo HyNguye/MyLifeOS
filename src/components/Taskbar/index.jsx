@@ -28,6 +28,7 @@ function Taskbar() {
     }, []);
     const handleReset = useCallback(() => {
         navigate('/');
+        localStorage.removeItem('user')
         window.location.reload();
     }, []);
     const handleLockScreen = useCallback(() => {
