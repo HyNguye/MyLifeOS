@@ -5,7 +5,7 @@ import {
   actions as appActions,
 } from "../../components/Application/app-store";
 import { HomeContext, actions } from "~/homepage-store";
-import { useContext, useEffect} from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Application from "../../components/Application";
 
@@ -15,7 +15,7 @@ function Home() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(HomeContext);
   const [stateApp, dispatchApp] = useContext(AppContext);
-  
+
   useEffect(() => {
     if (state.lockScreen) {
       navigate("/Lockscreen", { replace: true });
@@ -62,9 +62,10 @@ function Home() {
     }
   }
   function autoRename(app){
-    let newArr = state.appList.filter(myApp=>myApp.type.name === app.type.name)
-    if(newArr.indexOf(app)===0||newArr.indexOf(app)===-1){return ''}
-    return newArr.indexOf(app)
+    let newArr = stateApp.appRunning.filter(myApp=>myApp.type === app.type)
+  
+    if(newArr.lastIndexOf(app)===0||newArr.lastIndexOf(app)===-1){return ''}
+    return newArr.lastIndexOf(app)
   }
   return (
     <div
@@ -79,24 +80,22 @@ function Home() {
       <Taskbar />
       {stateApp.appRunning.map((app, index) => {
         if (app !== "") {
-          if (app.type.name + autoRename(app) === stateApp.nameApp) {
-            return (
-              <Draggable key={index} zIndex={2} appName={app.type.name + autoRename(app)}>
-                <Application index={autoRename(app)}>{app}</Application>
-              </Draggable>
-            );
-          } else {
-            return (
-              <Draggable key={index} zIndex={1} appName={app.type.name + autoRename(app)}>
-                <Application index={autoRename(app)}>{app}</Application>
-              </Draggable>
-            );
-          }
+          return (
+            <Draggable
+              key={index}
+              zIndex={
+                app.type.name + autoRename(app) === stateApp.nameApp ? 2 : 1
+              }
+              appName={app.type.name + autoRename(app)}
+            >
+              <Application index={autoRename(app)}>{app}</Application>
+            </Draggable>
+          );
         }
       })}
       <div className=" self-start max-w-full w-fit max-h-full h-fit flex-wrap flex flex-col justify-start items-start gap-14 p-14">
-        {state.appList.map((app,index) => (
-            <AppIcon key={app.type.name+index} >{app}</AppIcon>
+        {state.appList.map((app, index) => (
+          <AppIcon key={app.type.name + index}>{app}</AppIcon>
         ))}
       </div>
     </div>

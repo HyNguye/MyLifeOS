@@ -8,7 +8,7 @@ function Application({ children ,index}) {
     
   },[])
   const handlePriority = () => {
-    dispatch(actions.setCurrentApp(children.type.name+index));
+    dispatch(actions.setCurrentApp((children.type.name||'') + index));
     
   };
   return (
@@ -22,7 +22,7 @@ function Application({ children ,index}) {
           onClick={handlePriority}
           onMouseDown={handlePriority}
         >
-          {children.type.name+index}
+          {(children.type.name||'') + index}
         </div>
         <div
           className="w-7 bg-white text-black p-2 flex justify-center items-center border-black border-b-4"

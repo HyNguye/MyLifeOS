@@ -1,5 +1,5 @@
-import NewText from "../Application/NewText";
-import { HomeContext, actions } from "~/homepage-store";
+
+import { HomeContext } from "~/homepage-store";
 import { useContext} from "react";
 import {
     AppContext,
@@ -48,7 +48,7 @@ function AppIcon({children}) {
     return ( 
         <button 
         className=" h-28 w-28 flex flex-col"
-        onDoubleClick={()=>dispatchApp(appActions.setRunningAppsList(children))}
+        onDoubleClick={()=>dispatchApp(appActions.setRunningAppsList(<children.type/>))}
         onMouseDown={handleClickIcon}
         onMouseUp={handleUnClickIcon}>
           <img className='w-full h-full object-contain' src={handleSource(children)}/>
