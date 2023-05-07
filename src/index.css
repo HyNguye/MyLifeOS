@@ -16,3 +16,15 @@
   }
   
 }
+@layer components {
+ .calculator-btn {
+        background-color: white;
+        border: black solid 2px;
+        box-shadow: 5px 5px black;
+        width: 64px;
+        height: 64px;
+        text-align: center;
+        
+      }
+}
+

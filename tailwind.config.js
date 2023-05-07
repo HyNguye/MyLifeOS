@@ -6,6 +6,7 @@ export default {
   ],
   theme: {
     extend: {
+    
       fontFamily: {
         writeByHand: ['Parisienne'],
         vintage: ['"Press Start 2P"','sans-serif']

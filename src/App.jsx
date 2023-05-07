@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import StartupPage from '@page/StartupPage';
 import Home from '@page/Home';
 import LockScreen from '@page/LockScreen';

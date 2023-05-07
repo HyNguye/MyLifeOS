@@ -1,11 +1,17 @@
-import MyShop from "../components/Application/MyShop";
-import Piano from "../components/Application/Piano";
+
+
 import {
   CHANGE_BACKGROUND,
   FIND_APP,
   LOCK_SCREEN,
-  SET_NEW_FILE
+  SET_NEW_FILE,
+  SORT_BY_KIND,
+  SORT_BY_NAME
 } from "./constant";
+import MyShop from "@app/MyShop";
+import Piano from '@app/Piano'
+import NewText from '@app/NewText'
+import Calculator from "@app/Calculator";
 
 const initState = {
   bgColor: "rgba(0, 0, 255, 0.25)",
@@ -13,7 +19,7 @@ const initState = {
   lockScreen: false,
   find: "",
   findList: [],
-  appList: [<MyShop/>,<Piano/>],
+  appList: [<MyShop/>,<Piano/>,<NewText initInput='Toeic Certificate 640'/>,<Calculator/>],
   
  
 };
@@ -25,9 +31,11 @@ const reducer = (state, action) => {
         "rgba(0, 0, 255, 0.25)",
         "rgba(0, 255, 0, 0.25)",
       ];
+      let randomBg = color[Math.floor(Math.random() * color.length)]
+      while( randomBg === state.bgColor) {randomBg = color[Math.floor(Math.random() * color.length)]}
       return {
         ...state,
-        bgColor: color[Math.floor(Math.random() * color.length)],
+        bgColor: randomBg,
       };
     }
     case LOCK_SCREEN: {
@@ -39,14 +47,17 @@ const reducer = (state, action) => {
         ...state,
         find: action.payload,
         findList: state.appList.filter((app) =>
-          app.type.name.include(action.payload)
+          app.type.name.toLowerCase().includes(action.payload===''?'9999999':action.payload.toLowerCase())
         ),
-      }; // chua hoan thanh
+      }; 
     }
     case SET_NEW_FILE: {
       return {...state,appList:[...state.appList,action.payload]}
     }
-    
+    case SORT_BY_NAME:
+    case SORT_BY_KIND:{ 
+      return {...state,appList:[...action.payload]}
+    }
 
     default:
       throw Error("Invalid action at HomePage");

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+
 import CategoriesBtn from "./Component/CategoriesBtn";
 import Product from "./Component/ProductTag";
 import Payment from "./Component/PaymentTag";
@@ -45,13 +46,18 @@ function MyShop() {
           price: productOnShow.price * quantity,
         },
       ]);
+
       setQuatity(0);
     }
   };
-  const handleRemoveCart = useCallback((payload) => setCart(payload), []);
+  const handleRemoveCart = useCallback((payload,paymentSuccess) => {
+
+      setCart(payload);
+      if(paymentSuccess){setProductOnShow(paymentSuccess)}
+  }, []);
 
   return (
-    <div className=" max-h-fitScreen max-w-screen-lg w-screen h-screen bg-brownLayout-0 overflow-x-scroll ">
+    <div className=" max-h-fitScreen max-w-screen-lg w-screen h-screen bg-brownLayout-0 overflow-x-scroll scrollbar scrollbar-thumb-orange-400 scrollbar-track-amber-100 ">
       <div className="nav bg-black bg-opacity-70 p-2 flex">
         <div>
           {categories.map((category) => (

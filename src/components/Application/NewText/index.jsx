@@ -14,7 +14,7 @@ function NewText({ initInput }) {
         onChange={(e) => setInput(e.target.value)}
       ></textarea>{" "}
       <button className="w-full bg-orange-600 border-none p-2"
-      onClick={handleSave}>Save</button>
+      onClick={handleSave}>Save As New Text</button>
     </div>
   );
 }

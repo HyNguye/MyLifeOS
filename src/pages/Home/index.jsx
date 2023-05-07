@@ -7,8 +7,9 @@ import {
 import { HomeContext, actions } from "~/homepage-store";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Application from "../../components/Application";
 
+
+import Application from "../../components/Application";
 import Draggable from "../../components/Dragable";
 import AppIcon from "../../components/Icon";
 function Home() {

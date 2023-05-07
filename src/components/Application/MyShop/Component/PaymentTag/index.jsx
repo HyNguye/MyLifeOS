@@ -39,7 +39,16 @@ function Payment({ cart, handleRemoveCart, show }) {
         Total: {cart.reduce((prev, cur) => prev + cur.price, 0)}$
       </li>
       <li className="bg-red-500 border-4 border-white text-white text-sm p-2 text-center select-none"
-       onClick={()=>handleRemoveCart([])}>Payment</li>
+       onClick={()=>{
+        let paymentSuccess
+        if (cart.length > 0) {
+      
+          paymentSuccess = {
+            title: "Payment Successful",
+            description: "Your package is arriving soon!",
+          };
+        }
+         return (handleRemoveCart([],paymentSuccess||''))}}>Payment</li>
     </ul>
   );
 }

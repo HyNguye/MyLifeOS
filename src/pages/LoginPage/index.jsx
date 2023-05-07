@@ -38,7 +38,7 @@ function LoginPage() {
                 My Life <br /> Operating System
               </span>
             </div>
-            <div className=" text-sm">Select user name:</div>
+            <div className=" text-sm">Select user:</div>
             <ul className="bg-white shadow-inner shadow-black w-full h-fit p-2">
               {users.map((user) => (
                 <li key={user.id}>
