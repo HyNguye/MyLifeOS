@@ -111,7 +111,7 @@ function MyShop() {
           <div className="productName text-yellow-500 text-center mb-4">
             {productOnShow.title}
           </div>
-          <div className="script mb-3 text-sm">
+          <div className="script mb-3 text-md font-serif font-thin">
             {productOnShow.description || "Pick Your Products"}
           </div>
           <div className="text-3xl text-center text-lime-600">
