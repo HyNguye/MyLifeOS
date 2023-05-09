@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Application from "../../components/Application";
+import Application from "@comp/AppLayout";
 import Disk from "@asset/floppyDisk.png";
 import { useNavigate } from "react-router-dom";
 function LoginPage() {

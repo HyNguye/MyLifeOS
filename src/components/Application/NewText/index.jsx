@@ -18,5 +18,5 @@ function NewText({ initInput }) {
     </div>
   );
 }
-
+NewText.displayName = 'New Text'
 export default NewText;

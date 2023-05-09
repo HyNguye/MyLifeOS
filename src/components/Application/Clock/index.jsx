@@ -2,6 +2,7 @@ import { useState } from "react";
 import SessionClock from "./components/Session";
 import TimeClock from "./components/Time";
 import utilityBG from "@asset/utility_background.png";
+import Calculator from "../Calculator";
 function Clock() {
   const [feature, setFeature] = useState(<TimeClock />);
   const [isSessionBtnClicked, setClick] = useState(false);
@@ -38,5 +39,5 @@ function Clock() {
     </div>
   );
 }
-
+Clock.displayName = 'Clock'
 export default Clock;

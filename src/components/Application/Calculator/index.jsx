@@ -187,5 +187,5 @@ function Calculator() {
     </div>
   );
 }
-
+Calculator.displayName = 'Calculator'
 export default Calculator;

@@ -7,11 +7,11 @@ import {
   SET_DRAGGING_POSITION,
   SET_DRAGGING_INITIAL_POSITION,
 } from "./constant";
-import PersonalInfo from "@app/PersonalInfo";
+import PersonalInfo from '@app/PersonalInfo';
 
 const initState = {
   //handleStartUp App and Running App
-  nameApp: 'PersonalInfo',
+  nameApp: 'Personal Infomation',
   appRunning: [<PersonalInfo/>],
    //Drag feature
    isDraggable: false,

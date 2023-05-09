@@ -1,6 +1,6 @@
 export function handleExtension(app) {
-    switch (app.type.name) {
-      case "NewText":
+    switch (app.type.displayName) {
+      case "New Text":
         return ".txt";
   
       default:

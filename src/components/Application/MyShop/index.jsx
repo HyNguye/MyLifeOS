@@ -160,5 +160,5 @@ function MyShop() {
     </div>
   );
 }
-
+MyShop.displayName ='My Shop'
 export default MyShop;

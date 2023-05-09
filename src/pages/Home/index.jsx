@@ -8,8 +8,7 @@ import { HomeContext, actions } from "~/homepage-store";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-import Application from "../../components/Application";
+import Application from "@comp/AppLayout";
 import Draggable from "../../components/Dragable";
 import AppIcon from "../../components/Icon";
 function Home() {
@@ -18,7 +17,7 @@ function Home() {
   const [stateApp, dispatchApp] = useContext(AppContext);
   //check login token (use unique username like token)
   useEffect(() => {
-    if (!(localStorage.getItem("user"))) {
+    if (!localStorage.getItem("user")) {
       navigate("/Login", { replace: true });
     }
   }, []);
@@ -73,7 +72,9 @@ function Home() {
 
   // Unique name for unique ref  => handle many apprunning in one type
   function autoRename(app) {
-    let newArr = stateApp.appRunning.filter((myApp) => myApp.type === app.type);
+    let newArr = stateApp.appRunning.filter((myApp) => {
+      return myApp.type?.displayName === app.type.displayName|| myApp==='';
+    });
 
     if (newArr.lastIndexOf(app) === 0 || newArr.lastIndexOf(app) === -1) {
       return "";
@@ -97,9 +98,11 @@ function Home() {
             <Draggable
               key={index}
               zIndex={
-                app.type.name + autoRename(app) === stateApp.nameApp ? 2 : 1
+                app.type.displayName + autoRename(app) === stateApp.nameApp
+                  ? 2
+                  : 1
               }
-              appName={app.type.name + autoRename(app)}
+              appName={app.type.displayName + autoRename(app)}
             >
               <Application index={autoRename(app)}>{app}</Application>
             </Draggable>
@@ -107,9 +110,9 @@ function Home() {
         }
       })}
       <div className=" self-start max-w-full w-fit max-h-full h-fit flex-wrap flex flex-col justify-start items-start gap-14 p-14">
-        {state.appList.map((app, index) => (
-          <AppIcon key={app.type.name + index}>{app}</AppIcon>
-        ))}
+        {state.appList.map((app, index) => {if(app===''){return; }
+        return  <AppIcon key={app.type.displayName + index}>{app}</AppIcon>
+    })}
       </div>
     </div>
   );

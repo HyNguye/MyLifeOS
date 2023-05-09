@@ -1,14 +1,14 @@
-import { AppContext, actions } from "./app-store";
+import { AppContext, actions } from "@app/app-store";
 import { useContext, useEffect } from "react";
 
 function Application({ children ,index}) {
   const [state, dispatch] = useContext(AppContext);
   useEffect(()=>{
-    dispatch(actions.setCurrentApp(children.type.name+index));
+    dispatch(actions.setCurrentApp(children.type.displayName+index));
     
   },[])
   const handlePriority = () => {
-    dispatch(actions.setCurrentApp((children.type.name||'') + index));
+    dispatch(actions.setCurrentApp((children.type.displayName||'') + index));
     
   };
   return (
@@ -22,7 +22,7 @@ function Application({ children ,index}) {
           onClick={handlePriority}
           onMouseDown={handlePriority}
         >
-          {(children.type.name||'') + index}
+          {(children.type.displayName||'') + index}
         </div>
         <div
           className="w-7 bg-white text-black p-2 flex justify-center items-center border-black border-b-4"

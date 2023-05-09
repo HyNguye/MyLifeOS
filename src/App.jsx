@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import StartupPage from '@page/StartupPage';
 import Home from '@page/Home';
@@ -7,9 +7,9 @@ import LoginPage from '@page/LoginPage';
 
 function App() {
     return (
-        <Router>
+        <Router >
             <div className="App">
-                <Routes>
+                <Routes >
                     <Route element={<LockScreen />} path="/Lockscreen" />
                     <Route element={<StartupPage />} path="/" />
                     <Route element={<LoginPage />} path="/Login" />

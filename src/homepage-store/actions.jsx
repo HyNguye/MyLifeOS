@@ -5,11 +5,15 @@ import {
   SET_NEW_FILE,
   LOCK_SCREEN,
   FIND_APP,
-
+  REMOVE_DESTOP_ICON,
+  REFRESH
 } from "./constant";
 
 export const changeBackground = () => ({
   type: CHANGE_BACKGROUND,
+});
+export const refresh = () => ({
+  type: REFRESH,
 });
 export const sortByName = (payload) => ({
   type: SORT_BY_NAME,
@@ -29,6 +33,10 @@ export const findApp = (payload) => ({
 });
 export const setNewFile = (payload) => ({
   type: SET_NEW_FILE,
+  payload,
+});
+export const deleteApp = (payload) => ({
+  type: REMOVE_DESTOP_ICON,
   payload,
 });
 

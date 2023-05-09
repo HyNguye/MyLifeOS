@@ -82,5 +82,5 @@ function PersonalInfo() {
     </div>
   );
 }
-
+PersonalInfo.displayName = 'Personal Infomation'
 export default PersonalInfo;

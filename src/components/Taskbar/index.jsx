@@ -21,6 +21,9 @@ function Taskbar() {
     }));
     return newTab;
   };
+  const handleRefresh = useCallback(()=>{
+    dispatch(actions.refresh());
+  },[])
   const handleChangeBG = useCallback(() => {
     dispatch(actions.changeBackground());
   }, []);
@@ -55,14 +58,14 @@ function Taskbar() {
   }, []);
   const handleSortByName = useCallback(() => {
     let newOrder = state.appList;
-    newOrder.sort((a, b) => a.type.name.localeCompare(b.type.name));
+    newOrder.sort((a, b) => a.type.displayName.localeCompare(b.type.displayName));
     dispatch(actions.sortByName(newOrder));
   }, []);
   const infoTab = useMemo(
     () =>
       createTab(
-        ["Personal Info", "Lock Screen", "Reset", "Change Background"],
-        [handleShowInfo, handleLockScreen, handleReset, handleChangeBG]
+        ["Personal Info", "Change Background", "Lock Screen",'Refresh', "Reset"],
+        [handleShowInfo, handleChangeBG, handleLockScreen,handleRefresh, handleReset]
       ),
     []
   );
@@ -130,7 +133,7 @@ function Taskbar() {
               }}
               className="bg-white p-3 text-left rounded-none border "
             >
-              {app.type.name}
+              {app.type.displayName}
             </button>
           ))}
         </div>

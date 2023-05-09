@@ -185,5 +185,5 @@ function Piano() {
     </div>
   );
 }
-
+Piano.displayName = 'Piano'
 export default Piano;
