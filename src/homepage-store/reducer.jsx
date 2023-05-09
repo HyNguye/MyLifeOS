@@ -6,7 +6,7 @@ import {
   SORT_BY_KIND,
   SORT_BY_NAME,
   REMOVE_DESTOP_ICON,
-  REFRESH
+  REFRESH,
 } from "./constant";
 import MyShop from "@app/MyShop";
 import Piano from "@app/Piano";
@@ -21,7 +21,13 @@ const initState = {
   appList: [
     <MyShop />,
     <Piano />,
-    <NewText initInput="Toeic Certificate 640" />,
+    <NewText
+      initInput="
+    You're welcome! If you have any more questions or need further assistance, feel free to ask.
+    Github source: https://github.com/HyNguye/MyLifeOS 
+    Note: This website is not intended for mobile devices and Unikey. 
+    "
+    />,
     <Calculator />,
   ],
 };
@@ -60,11 +66,17 @@ const reducer = (state, action) => {
       };
     }
     case SET_NEW_FILE: {
-      return { ...state, appList: [...state.appList, action.payload] };
+      let newArr = state.appList
+      console.log(state.appList);
+      return { ...state, appList: [...newArr, action.payload] };
     }
-    case SORT_BY_NAME:
+    case SORT_BY_NAME: {
+
+      return { ...state, appList: action.payload };
+    }
     case SORT_BY_KIND: {
-      return { ...state, appList: [...action.payload] };
+    
+      return { ...state, appList: action.payload };
     }
     case REMOVE_DESTOP_ICON: {
       let newAppList = state.appList.map((app) => {
@@ -76,8 +88,8 @@ const reducer = (state, action) => {
       return { ...state, appList: newAppList };
     }
     case REFRESH: {
-      let newAppList =state.appList.filter(app=>app!=='')
-      return {...state,appList: newAppList};
+      let newAppList = state.appList.filter((app) => app !== "");
+      return { ...state, appList: newAppList };
     }
     default:
       throw Error("Invalid action at HomePage");

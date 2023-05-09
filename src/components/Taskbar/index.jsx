@@ -49,18 +49,19 @@ function Taskbar() {
     dispatch(actions.findApp(e.target.value));
   };
   const handleSortByKind = useCallback(() => {
+    console.log(state.appList);
     let newOrder = state.appList.map(app=>({...app,extention:handleExtension(app)}))
     newOrder.sort((a, b) =>
       a.extention.localeCompare(b.extention)
     );
 
     dispatch(actions.sortByKind(newOrder));
-  }, []);
+  }, [state.appList]);
   const handleSortByName = useCallback(() => {
     let newOrder = state.appList;
     newOrder.sort((a, b) => a.type.displayName.localeCompare(b.type.displayName));
     dispatch(actions.sortByName(newOrder));
-  }, []);
+  }, [state.appList]);
   const infoTab = useMemo(
     () =>
       createTab(
@@ -79,7 +80,7 @@ function Taskbar() {
         ["Sort By Name", "Sort By Kind"],
         [handleSortByName, handleSortByKind]
       ),
-    []
+    [state.appList]
   );
 
   return (

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 function Calculator() {
   const [display, setDisplay] = useState("0");
-    const result = useMemo(()=>display.toString(),[display])
+  const result = useMemo(() => display.toString(), [display]);
   const parseStringtoMath = (rs) => Function(`return(${rs})`)();
   const onInput = (e) => {
     setDisplay((prev) =>
@@ -12,7 +12,7 @@ function Calculator() {
   };
   const onInputSpecial = (e) => {
     let parttern = /\d*[.]+\d*[^+-/*]$/;
-    
+
     if (parttern.test(display)) {
       setDisplay((prev) => prev);
     } else {
@@ -115,7 +115,6 @@ function Calculator() {
           onClick={onInput}
           id="one"
         >
-            
           1
         </button>
         <button
@@ -133,7 +132,6 @@ function Calculator() {
           3
         </button>
 
-      
         <button
           className="calculator-btn hover:opacity-70"
           onClick={onInput}
@@ -141,7 +139,7 @@ function Calculator() {
         >
           -
         </button>
-      
+
         <button
           className=" calculator-btn hover:opacity-70"
           onClick={onInput}
@@ -179,13 +177,14 @@ function Calculator() {
         </button>
       </div>
       <div
-        className=" col-start-1 row-start-1 row-span-1 col-span-5 bg-white p-4 text-right mb-4 border-4 border-black  text-5xl w-full break-words"
+        className=" col-start-1 row-start-1 row-span-1 col-span-5 bg-white 
+         h-36 p-4 text-right mb-4 border-4 border-black  text-5xl w-full break-words overflow-x-scroll"
         id="display"
       >
-        {result.includes('.')?parseFloat(result).toFixed(2):display}
+        {result.includes(".") ? parseFloat(result).toFixed(2) : display}
       </div>
     </div>
   );
 }
-Calculator.displayName = 'Calculator'
+Calculator.displayName = "Calculator";
 export default Calculator;

@@ -36,7 +36,7 @@ function Payment({ cart, handleRemoveCart, show }) {
         </li>
       ))}
       <li className=" my-2">
-        Total: {cart.reduce((prev, cur) => prev + cur.price, 0)}$
+        Total: {Math.round(cart.reduce((prev, cur) => prev + cur.price, 0))}$
       </li>
       <li className="bg-red-500 border-4 border-white text-white text-sm p-2 text-center select-none"
        onClick={()=>{
