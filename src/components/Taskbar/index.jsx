@@ -21,9 +21,7 @@ function Taskbar() {
     }));
     return newTab;
   };
-  const handleRefresh = useCallback(()=>{
-    dispatch(actions.refresh());
-  },[])
+  
   const handleChangeBG = useCallback(() => {
     dispatch(actions.changeBackground());
   }, []);
@@ -65,8 +63,8 @@ function Taskbar() {
   const infoTab = useMemo(
     () =>
       createTab(
-        ["Personal Info", "Change Background", "Lock Screen",'Refresh', "Reset"],
-        [handleShowInfo, handleChangeBG, handleLockScreen,handleRefresh, handleReset]
+        ["Personal Info", "Change Background", "Lock Screen", "Reset"],
+        [handleShowInfo, handleChangeBG, handleLockScreen, handleReset]
       ),
     []
   );

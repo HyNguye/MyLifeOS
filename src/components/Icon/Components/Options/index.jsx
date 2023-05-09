@@ -15,10 +15,10 @@ function Options({ handleDelete, handleTurnOffOptions }) {
   }, []);
   return (
     <ul
-      className=" w-52 h-fit bg-old-0 border border-black absolute top-1 left-10 z-10"
+      className=" bg-old-0 h-fit w-64 border-2 border-black absolute top-1 left-10 z-10"
       ref={ref}
     >
-      <li className="p-2" onClick={handleDelete}>
+      <li className=" p-2 h-10 w-full  text-sm hover:bg-black hover:text-white" onClick={handleDelete}>
         Delete
       </li>
     </ul>

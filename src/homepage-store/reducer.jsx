@@ -67,7 +67,6 @@ const reducer = (state, action) => {
     }
     case SET_NEW_FILE: {
       let newArr = state.appList
-      console.log(state.appList);
       return { ...state, appList: [...newArr, action.payload] };
     }
     case SORT_BY_NAME: {

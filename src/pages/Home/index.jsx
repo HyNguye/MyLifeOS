@@ -5,7 +5,7 @@ import {
   actions as appActions,
 } from "../../components/Application/app-store";
 import { HomeContext, actions } from "~/homepage-store";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Application from "@comp/AppLayout";
@@ -15,6 +15,9 @@ function Home() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(HomeContext);
   const [stateApp, dispatchApp] = useContext(AppContext);
+  const [showMenu, setShowMenu] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const menuRef = useRef();
   //check login token (use unique username like token)
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -46,12 +49,19 @@ function Home() {
         dispatch(actions.lockScreen(true));
       }, 120000);
     };
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
     window.addEventListener("mousemove", handleAutoLockScreen);
     window.addEventListener("keydown", handleAutoLockScreen);
     window.addEventListener("click", handleAutoLockScreen);
 
     return () => {
       clearTimeout(timer);
+      document.removeEventListener('mousedown', handleClickOutside);
       window.removeEventListener("mousemove", handleAutoLockScreen);
       window.removeEventListener("keydown", handleAutoLockScreen);
       window.removeEventListener("click", handleAutoLockScreen);
@@ -73,7 +83,7 @@ function Home() {
   // Unique name for unique ref  => handle many apprunning in one type
   function autoRename(app) {
     let newArr = stateApp.appRunning.filter((myApp) => {
-      return myApp.type?.displayName === app.type.displayName|| myApp==='';
+      return myApp.type?.displayName === app.type.displayName || myApp === "";
     });
 
     if (newArr.lastIndexOf(app) === 0 || newArr.lastIndexOf(app) === -1) {
@@ -81,6 +91,19 @@ function Home() {
     }
     return newArr.lastIndexOf(app);
   }
+  // handleRightClick on gap
+  const handleRightClick = (e) => {
+    e.preventDefault();
+    if (e.target === e.currentTarget) {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+      setShowMenu(true);
+    }
+  };
+  const handleRefresh = ()=>{
+    dispatch(actions.refresh());
+    setShowMenu(false)
+  }
+
   return (
     <div
       className={`flex flex-col items-center w-screen h-screen font-bold bg-blend-multiply overflow-hidden relative`}
@@ -90,6 +113,7 @@ function Home() {
       }}
       onMouseUp={() => dispatchApp(appActions.dragging(false))}
       onMouseMove={handleMouseMove}
+      onContextMenu={handleRightClick}
     >
       <Taskbar />
       {stateApp.appRunning.map((app, index) => {
@@ -110,10 +134,22 @@ function Home() {
         }
       })}
       <div className=" self-start max-w-full w-fit max-h-full h-fit flex-wrap flex flex-col justify-start items-start gap-14 p-14">
-        {state.appList.map((app, index) => {if(app===''){return; }
-        return  <AppIcon key={app.type.displayName + index}>{app}</AppIcon>
-    })}
+        {state.appList.map((app, index) => {
+          if (app === "") {
+            return;
+          }
+          return <AppIcon key={app.type.displayName + index}>{app}</AppIcon>;
+        })}
       </div>
+      {showMenu && (
+        <ul
+          className=" absolute"
+          style={{ top: cursorPosition.y, left: cursorPosition.x }}
+          ref={menuRef}
+        >
+          <li className=" bg-old-0 p-2 h-10 w-64 border-2 border-black text-sm hover:bg-black hover:text-white" onClick={handleRefresh}>Refresh</li>
+        </ul>
+      )}
     </div>
   );
 }

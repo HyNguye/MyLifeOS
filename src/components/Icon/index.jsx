@@ -15,7 +15,7 @@ function AppIcon({ children }) {
 
   const handleDelete = useCallback(() => {
     dispatch(homeActions.deleteApp(children));
-  }, []);
+  }, [state.appList]);
   const handleTurnOffOptions = useCallback(() => {
     setShowOptions(false);
   }, []);
