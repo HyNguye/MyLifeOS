@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import CategoriesBtn from "./Component/CategoriesBtn";
 import Product from "./Component/ProductTag";
@@ -14,16 +14,22 @@ function MyShop() {
   );
   const [quantity, setQuatity] = useState(0);
   const [showCart, setShowCart] = useState(false);
-
+  const rootObsRef = useRef();
   useEffect(() => {
     fetch("https://fakestoreapi.com/products/categories")
       .then((res) => res.json())
       .then((cateFetch) => setCategories(cateFetch));
   }, []);
+
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products/category/${isActive}`)
       .then((res) => res.json())
-      .then((product) => setProductList(product));
+      .then((products) =>
+        setProductList(
+          products.map((product, index) => ({ ...product, id: index }))
+        )
+      );
+     setProductOnShow('') 
   }, [isActive]);
   useEffect(() => {
     localStorage.setItem(localStorage.getItem("user"), JSON.stringify(cart));
@@ -50,14 +56,21 @@ function MyShop() {
       setQuatity(0);
     }
   };
-  const handleRemoveCart = useCallback((payload,paymentSuccess) => {
 
-      setCart(payload);
-      if(paymentSuccess){setProductOnShow(paymentSuccess)}
+  const handleRemoveCart = useCallback((payload, paymentSuccess) => {
+    setCart(payload);
+    if (paymentSuccess) {
+      setProductOnShow(paymentSuccess);
+    }
   }, []);
-
+  const onProductList = (index) => {
+    setProductList((prev) => [...prev, { ...prev[0], id: index+1 }]);
+  };
   return (
-    <div className=" max-h-fitScreen max-w-screen-lg w-screen h-screen bg-brownLayout-0 overflow-x-scroll scrollbar scrollbar-thumb-orange-400 scrollbar-track-amber-100 ">
+    <div
+      ref={rootObsRef}
+      className=" max-h-fitScreen max-w-screen-lg w-screen h-screen bg-brownLayout-0 overflow-x-scroll scrollbar scrollbar-thumb-orange-400 scrollbar-track-amber-100 "
+    >
       <div className="nav bg-black bg-opacity-70 p-2 flex">
         <div>
           {categories.map((category) => (
@@ -147,12 +160,18 @@ function MyShop() {
           </button>
         </div>
         <div className="flex gap-2 flex-wrap m-5 w-2/3">
-          {productList.map((product) => (
+          {productList.map((product, index) => (
             <Product
-              key={product.id}
+              key={index}
               product={product}
               handleClick={handleShowPd}
               id={productOnShow.id}
+              root={rootObsRef}
+              isLastPd={productList?.length === index + 1}
+              handleProductList={
+                productList.length < 30 ? onProductList : () => {}
+              }
+              index={index}
             />
           ))}
         </div>
@@ -160,5 +179,5 @@ function MyShop() {
     </div>
   );
 }
-MyShop.displayName ='My Shop'
+MyShop.displayName = "My Shop";
 export default MyShop;

@@ -57,7 +57,7 @@ const reducer = (state, action) => {
         ...state,
         find: action.payload,
         findList: state.appList.filter((app) =>
-          app.type.displayName
+          app.type?.displayName
             .toLowerCase()
             .includes(
               action.payload === "" ? "9999999" : action.payload.toLowerCase()
