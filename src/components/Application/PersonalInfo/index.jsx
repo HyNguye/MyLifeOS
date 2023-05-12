@@ -25,6 +25,14 @@ function PersonalInfo() {
       nextRef.current.disabled = true;
     }
   }, [certificate]);
+  useEffect(()=>{
+    const autoSlide = setInterval(()=>{
+      setCertificate(prev=>prev===myCer.length-1?0:prev+1)
+    },3000)
+    return ()=>{
+      clearInterval(autoSlide);
+    }
+  },[])
   const handleSwitchingNext = () => {
     setCertificate((prev) => prev + 1);
   };
@@ -65,10 +73,14 @@ function PersonalInfo() {
           
           className=" text-5xl"
         >
+
           &lt;
         </button>
-        <div className="border-black border-dotted border-4 w-utility">
-          <img src={myCer[certificate]} />
+        <div className="border-black border-dotted border-4 w-utility overflow-hidden">
+          <div className="w-full h-full flex transition-transform ease-out duration-500"
+          style={{transform:`translateX(-${certificate*100}%)`}}>
+            {myCer.map(cer=>(<img className='object-contain w-full' src={cer}/>))}
+          </div>
         </div>
         <button
           ref={nextRef}
